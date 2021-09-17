@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    response = HTTP.get("https://api.seatgeek.com/2/events?q=#{params[:team]}&client_id=MzA3NTE0OHwxNjMxODkzNDk1LjM1ODYyMjg&client_secret=c938cb14d832601d646e7d02bd49c483fc4446a53a689eb3ecdc50036142f918")
+    response = HTTP.get("https://api.seatgeek.com/2/events?q=#{params[:team]}&client_id=MzA3NTE0OHwxNjMxOTEyOTc1LjMzNDA4NA&client_secret=#{Rails.application.credentials.seat_geek_api_key}")
     events = JSON.parse(response.body)
 
     games = events["events"].map { |game| game }
