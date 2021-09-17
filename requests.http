@@ -1,1 +1,1 @@
-GET http://localhost:3000/events/florida+gators+football
+GET http://localhost:3000/events/florida+gators+football.json
