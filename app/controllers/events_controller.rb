@@ -66,6 +66,7 @@ class EventsController < ApplicationController
       # Storing information for each game
       info << {
         game: game["title"],
+        venue: game["venue"]["name"],
         city: game["venue"]["city"],
         temperature: weather["main"]["feels_like"],
         home_team_players: home_team_players,
