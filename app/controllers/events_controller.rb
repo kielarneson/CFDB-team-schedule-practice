@@ -48,8 +48,7 @@ class EventsController < ApplicationController
           http.request(request)
         end
 
-        cfbdata_string = response.body
-        players = JSON.parse(cfbdata_string)
+        players = JSON.parse(response.body)
 
         # Getting real player names and sorting them alphabetically
         return players.select { |player| player["first_name"] != nil }.map { |player| "#{player["last_name"]}, #{player["first_name"]}" }.sort
