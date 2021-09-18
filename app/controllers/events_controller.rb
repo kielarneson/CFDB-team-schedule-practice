@@ -26,9 +26,9 @@ class EventsController < ApplicationController
       # Currently only works 100% of the time with SEC teams
       def cfdb_team_key(team)
         if team.split(" ")[1] == "Miss" || team.split(" ")[1] == "State" || team.split(" ")[1] == "Carolina" || team.split(" ")[1] == "A&M"
-          team_name = team.split(" ")[0] + " " + team.split(" ")[1]
+          team_name = "#{team.split(" ")[0]} #{team.split(" ")[1]}"
         else
-          team_name = team.split(" ")[0]
+          team_name = "#{team.split(" ")[0]}"
         end
         return team_name
       end
