@@ -38,8 +38,8 @@ class EventsController < ApplicationController
       # Away team name
       away_team = cfdb_team_key(away_team)
 
-      # CFDB players request
-      def players(team)
+      # CFDB active_players request
+      def active_players(team)
         uri = URI.parse("https://api.collegefootballdata.com/roster?team=#{team}&year=2021")
         request = Net::HTTP::Get.new(uri)
         request["Accept"] = "application/json"
@@ -51,16 +51,16 @@ class EventsController < ApplicationController
           http.request(request)
         end
 
-        players = JSON.parse(response.body)
+        active_players = JSON.parse(response.body)
 
         # Getting real player names and sorting them alphabetically
-        return players.select { |player| player["first_name"] != nil }.map { |player| "#{player["last_name"]}, #{player["first_name"]}" }.sort
+        return active_players.select { |player| player["first_name"] != nil }.map { |player| "#{player["last_name"]}, #{player["first_name"]}" }.sort
       end
 
-      # Getting home team players
-      home_team_players = players(home_team)
-      # Getting away team players
-      away_team_players = players(away_team)
+      # Getting home team active_players
+      home_team_active_players = active_players(home_team)
+      # Getting away team active_players
+      away_team_active_players = active_players(away_team)
 
       # Getting weather date from weather API
       response = HTTP.get("https://api.openweathermap.org/data/2.5/weather?q=#{game["venue"]["city"]}&units=imperial&appid=#{Rails.application.credentials.weather_api_key}")
@@ -72,8 +72,8 @@ class EventsController < ApplicationController
         venue: game["venue"]["name"],
         city: game["venue"]["city"],
         temperature: weather["main"]["feels_like"],
-        home_team_players: home_team_players,
-        away_team_players: away_team_players,
+        home_team_players: home_team_active_players,
+        away_team_players: away_team_active_players,
       } }
 
       # Indexing the week count
