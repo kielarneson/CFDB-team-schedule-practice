@@ -11,8 +11,11 @@ class EventsController < ApplicationController
     # Mapping each game on a team's schedule
     games = events["events"].map { |game| game }
 
+    # Defining variables to be used in the loop
     # This is where we will store all of our information
     info = []
+    # Week count
+    week = 3
 
     # Looping through each game
     games.each do |game|
@@ -64,14 +67,17 @@ class EventsController < ApplicationController
       weather = JSON.parse(response.body)
 
       # Storing information for each game
-      info << {
+      info << { "week_#{week}": {
         game: game["title"],
         venue: game["venue"]["name"],
         city: game["venue"]["city"],
         temperature: weather["main"]["feels_like"],
         home_team_players: home_team_players,
         away_team_players: away_team_players,
-      }
+      } }
+
+      # Indexing the week count
+      week += 1
     end
     # Displaying information
     render json: info
